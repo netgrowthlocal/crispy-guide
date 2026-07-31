@@ -1,0 +1,56 @@
+// Mobile nav toggle
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+
+navToggle.addEventListener('click', () => {
+  const isOpen = navLinks.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+});
+
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  });
+});
+
+// Position each section's node at the top of its section, then
+// light nodes and fill the conduit line as the page scrolls.
+const fill = document.getElementById('currentFill');
+const nodes = document.querySelectorAll('[data-node]');
+
+function positionNodes() {
+  nodes.forEach(node => {
+    const section = node.closest('[data-section]');
+    node.style.top = section.offsetTop + 'px';
+  });
+}
+
+function updateCurrentLine() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0;
+  fill.style.height = (progress * 100) + '%';
+
+  nodes.forEach(node => {
+    const section = node.closest('[data-section]');
+    if (scrollTop + window.innerHeight * 0.6 >= section.offsetTop) {
+      node.classList.add('lit');
+    } else {
+      node.classList.remove('lit');
+    }
+  });
+}
+
+window.addEventListener('load', () => {
+  positionNodes();
+  updateCurrentLine();
+});
+window.addEventListener('resize', () => {
+  positionNodes();
+  updateCurrentLine();
+});
+window.addEventListener('scroll', updateCurrentLine, { passive: true });
+
+// Footer year
+document.getElementById('year').textContent = new Date().getFullYear();

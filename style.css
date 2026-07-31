@@ -1,0 +1,35 @@
+# East Anglia Electrical Contractors — website
+
+A static site. No build step, no dependencies — just HTML, CSS and JS.
+
+## Structure
+```
+index.html
+css/style.css
+js/script.js
+images/        (logo + project photos)
+```
+
+## Push to GitHub
+```bash
+cd eaec-site
+git init
+git add .
+git commit -m "Initial site"
+git branch -M main
+git remote add origin https://github.com/YOUR-USERNAME/eaec-website.git
+git push -u origin main
+```
+(Create the empty repo on GitHub first, then paste your own remote URL above.)
+
+## Deploy on Netlify
+1. Netlify → **Add new site → Import an existing project**.
+2. Connect GitHub, pick the `eaec-website` repo.
+3. Build settings: leave **Build command** blank and **Publish directory** as `/` (or `.`) — there's nothing to build.
+4. Deploy. Netlify gives you a `*.netlify.app` URL immediately; add a custom domain later under **Domain settings** if you buy one.
+
+## Editing later
+- **Phone/email**: search-and-replace `07538084698` / `EAEC-Electrical@outlook.com` across `index.html`.
+- **Services list**: each service is a `.service-card` block in `index.html` — copy/paste one to add another.
+- **Photos**: drop new images into `/images` and reference them in the `<section class="work">` gallery.
+- **Colours**: all defined once at the top of `css/style.css` under `:root`.
